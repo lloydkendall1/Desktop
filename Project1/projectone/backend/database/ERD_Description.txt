@@ -1,0 +1,38 @@
+This file contains a description on the ERD that was made for project 1
+
+Tables made:
+
+1.
+Users: ID(PK), Username, email and a creation date
+
+2. Calibrations: ID(PK), user_id (FK -> users), created at timestamp, baseline_spine angle, baseline_head_angle, nice to have -> baseline_left_pressure, baseline right_pressure, is active
+
+3. Sessions: ID(PK), user_id(FK-> users), started_at, ended_at, notes
+
+4. Posture_Classes: ID(PK), name, description, severity
+
+5. Posture_Readings: ID(PK), session_id(FK -> Session), posture_class_id(FK -> posture_classes), timestamp, confidence, spine_angle, head_angle
+
+6. sensor_readings (nice to have): ID(PK), session_ID(FK->Sessions),timestamp,  left_armrest_pressure, right_armrest_pressure
+
+7. alerts: ID(PK), session_id(FK -> sessions), posture_reading_id(FK -> posture_readings (nullable)), timestamp, alert_type, duration_ms
+
+Description of the ERD:
+I used one-and-only-one on the parent side everywhere; the child side varies between zero-or-many and one-or-many depending on the relationship — reasoning per FK below.
+
+SURELY zero or many:
+
+Users -> Calibrations: A new user hasen't calibrated yet.
+Users -> Sessions: A new user doesn't have any sessions yet.
+Posture_classes -> Posture_readings: Side lean left might not be activated if the user doens't lean that way. 
+Sessions -> Alerts: If posture is perfect the whole session, zero alerts will be created.
+Posture_readings -> Alerts: Most Readings generate zero alerts
+
+Possibly zero or many | one or many
+
+Sessions -> Posture_readings: A session with zero inferences is meaningless. Sessions with zero readings are pruned by a cleanup job.
+Sessions -> Sensor_Readings: Same as above
+
+Use of the init.sql:
+
+Because I'm using FastAPI I need to have the tables created from the start. The init file makes sure this happens.

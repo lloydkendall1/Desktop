@@ -1,0 +1,49 @@
+# --- Secrets & environment ---
+.env
+.env.*
+!.env.example
+
+# --- Virtual environments ---
+.venv/
+.venv*/
+venv/
+env/
+
+# --- Python bytecode & caches ---
+__pycache__/
+**/__pycache__/
+.pytest_cache/
+*.pyc
+*.pyo
+*.pyd
+
+# --- Python tooling ---
+.ruff_cache/
+.mypy_cache/
+
+# --- Local databases & exports ---
+*.db
+*.sqlite
+*.sqlite3
+*.zip
+
+# --- ML model weights & exports ---
+*.pt
+*.onnx
+*_ncnn_model/
+*.engine
+yolo*.pt
+
+# --- Captured frames, recordings, calibration dumps ---
+captures/
+recordings/
+*.mp4
+*.avi
+*.jpg
+*.jpeg
+*.png
+
+# --- OS / editor ---
+.DS_Store
+.idea/
+.vscode/
